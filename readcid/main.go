@@ -46,7 +46,7 @@ func (marshable MDT) MarshalJSON() ([]byte, error) {
 
 type CID struct {
 	ManID       byte   `json:"ManufacturerID"`
-	OEMID       uint16 `json:"EOMID"`
+	OEMID       uint16 `json:"OEMID"`
 	ProdName    PNM    `json:"ProductName"`
 	ProdRev     byte   `json:"ProductRevision"`
 	ProdSerial  PSN    `json:"ProductSerial"`
