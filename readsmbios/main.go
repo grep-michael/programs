@@ -7,12 +7,15 @@ import (
 	"os"
 
 	smbiosdata "github.com/grep-michael/SMBIOS_parser/SMBiosLib/SMBiosData"
+	dmitabel "github.com/grep-michael/SMBIOS_parser/SMBiosLib/Structures/DMITabel"
 )
 
 func main() {
 
 	tableFlag := flag.String("table", "/sys/firmware/dmi/tables/DMI", "Path to load dmi table bytes from")
 	epsFlag := flag.String("eps", "/sys/firmware/dmi/tables/smbios_entry_point", "Path to load SMBios Entry point header bytes from")
+	structSearch := flag.Int("struct", -1, "Structure Number to lookup")
+	structList := flag.Bool("l", false, "List the SMBIOS structs")
 
 	var help bool
 
@@ -25,6 +28,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	if *structList {
+		jsonPrint(dmitabel.TypeNumToFriendlyNameMap)
+		os.Exit(0)
+	}
+
 	table, err := LoadRaw(*tableFlag)
 	handleError(err)
 	eps, err := LoadRaw(*epsFlag)
@@ -34,10 +42,20 @@ func main() {
 	err = smbios.LoadDMITable()
 	handleError(err)
 
-	js, err := json.MarshalIndent(smbios.DMITable, "", "    ")
+	if *structSearch <= -1 {
+		jsonPrint(smbios.DMITable)
+		os.Exit(0)
+	} else {
+		structList := smbios.DMITable.Structs[*structSearch]
+		jsonPrint(structList)
+	}
+
+}
+
+func jsonPrint(obj any) {
+	js, err := json.MarshalIndent(obj, "", "    ")
 	handleError(err)
 	fmt.Println(string(js))
-
 }
 func handleError(err error) {
 	if err != nil {
