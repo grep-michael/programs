@@ -7,7 +7,7 @@ import (
 	"os"
 
 	smbiosdata "github.com/grep-michael/SMBIOS_parser/SMBiosLib/SMBiosData"
-	dmitabel "github.com/grep-michael/SMBIOS_parser/SMBiosLib/Structures/DMITabel"
+	dmitable "github.com/grep-michael/SMBIOS_parser/SMBiosLib/Structures/DMITabel"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func main() {
 	}
 
 	if *structList {
-		jsonPrint(dmitabel.TypeNumToFriendlyNameMap)
+		jsonPrint(dmitable.TypeNumToFriendlyNameMap)
 		os.Exit(0)
 	}
 
