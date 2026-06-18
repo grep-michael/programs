@@ -4,7 +4,7 @@
 
 BIN_DIR="$HOME/go/bin"
 
-
+go mod tidy
 for dir in */; do
     dir="${dir%/}"
     if ! compgen -G "$dir/*.go" > /dev/null; then
