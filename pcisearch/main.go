@@ -71,6 +71,6 @@ func lookupClass(class string, sources []string) {
 			os.Exit(0)
 		}
 	}
-	fmt.Printf("Failed to find %s class")
+	fmt.Printf("Failed to find %s class", sources)
 	os.Exit(1)
 }
